@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { withErrorBoundary } from "react-error-boundary";
+import ErrorComponent from "components/common/ErrorComponent";
 
-const Authentication = ({ children, heading }) => {
+const AuthenticationLayout = ({ children, heading }) => {
   return (
     <div className="relative w-full min-h-screen p-10 bg-lite isolate">
       <img
@@ -22,4 +25,11 @@ const Authentication = ({ children, heading }) => {
   );
 };
 
-export default Authentication;
+AuthenticationLayout.propTypes = {
+  heading: PropTypes.string,
+  children: PropTypes.node,
+};
+
+export default withErrorBoundary(AuthenticationLayout, {
+  FallbackComponent: ErrorComponent,
+});

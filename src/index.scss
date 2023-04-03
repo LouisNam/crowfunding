@@ -5,4 +5,7 @@
   body {
     @apply font-primary text-base leading-6;
   }
+  input {
+    @apply outline-none;
+  }
 }
