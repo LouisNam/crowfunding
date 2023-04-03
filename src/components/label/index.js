@@ -1,3 +1,1 @@
-import Label from "./Label";
-
-export { Label };
+export const { default: Label } = require("./Label");
