@@ -1,14 +1,16 @@
-import React, { useState } from "react";
-import AuthenticationLayout from "layout/AuthenticationLayout";
-import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import Label from "components/label/Label";
-import Input from "components/input/Input";
-import FormGroup from "components/common/FormGroup";
 import { Button } from "components/button";
 import { Checkbox } from "components/checkbox";
+import { IconEyeToggle } from "components/icons";
+import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import AuthenticationLayout from "layout/AuthenticationLayout";
+import FormGroup from "components/common/FormGroup";
+import Input from "components/input/Input";
+import Label from "components/label/Label";
+import React from "react";
+import useToggleValue from "hooks/useToggleValue";
 
 const schema = yup.object({
   name: yup.string().required("This field is required!"),
@@ -23,7 +25,6 @@ const schema = yup.object({
 });
 
 const SignUpPage = () => {
-  const [acceptTerm, setAcceptTerm] = useState(false);
   const {
     handleSubmit,
     control,
@@ -34,9 +35,10 @@ const SignUpPage = () => {
     console.log("🚀 ~ file: SignUpPage.js:17 ~ SignUpPage ~ values:", values);
   };
 
-  const handleToggleAcceptTerm = () => {
-    setAcceptTerm(!acceptTerm);
-  };
+  const { value: acceptTerm, handleToggleValue: handleToggleAcceptTerm } =
+    useToggleValue();
+  const { value: showPassword, handleToggleValue: handleTogglePassword } =
+    useToggleValue();
 
   return (
     <AuthenticationLayout heading={"Sign Up"}>
@@ -46,11 +48,11 @@ const SignUpPage = () => {
           Sign in
         </Link>
       </p>
-      <button className="flex items-center justify-center w-full py-4 mb-5 text-base font-semibold gap-x-3 border-stroke rounded-xl text-text2">
+      <button className="flex items-center justify-center w-full py-4 mb-5 text-base font-semibold border gap-x-3 border-stroke rounded-xl text-text2 dark:text-white dark:border-darkStroke">
         <img alt="google" srcSet="icon-google.png 2x" />
         <span>Sign up with google</span>
       </button>
-      <p className="mb-4 text-xs font-normal text-center lg:text-sm lg:mb-8 text-text2">
+      <p className="mb-4 text-xs font-normal text-center lg:text-sm lg:mb-8 text-text2 dark:text-white">
         Or sign up with email
       </p>
       <form onSubmit={handleSubmit(handleSignUp)} autoComplete="off">
@@ -78,10 +80,15 @@ const SignUpPage = () => {
           <Input
             control={control}
             name="password"
-            type="password"
+            type={`${showPassword ? "text" : "password"}`}
             placeholder="Create a password"
             error={errors.password?.message}
-          ></Input>
+          >
+            <IconEyeToggle
+              open={showPassword}
+              onClick={handleTogglePassword}
+            ></IconEyeToggle>
+          </Input>
         </FormGroup>
         <div className="flex items-start mb-5 gap-x-5">
           <Checkbox
@@ -89,12 +96,12 @@ const SignUpPage = () => {
             checked={acceptTerm}
             onClick={handleToggleAcceptTerm}
           >
-            <div className="flex-1 text-sm text-text2">
+            <p className="flex-1 text-xs lg:text-sm text-text2 dark:text-text3">
               I agree to the{" "}
               <span className="underline text-secondary">Terms of Use</span> and
               have read and understand the{" "}
               <span className="underline text-secondary">Privacy policy</span>.
-            </div>
+            </p>
           </Checkbox>
         </div>
         <Button type="submit" className="w-full bg-primary">
