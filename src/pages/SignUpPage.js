@@ -7,20 +7,37 @@ import Input from "components/input/Input";
 import FormGroup from "components/common/FormGroup";
 import { Button } from "components/button";
 import { Checkbox } from "components/checkbox";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object({
+  name: yup.string().required("This field is required!"),
+  email: yup
+    .string()
+    .required("This field is required!")
+    .email("Invalid email address!"),
+  password: yup
+    .string()
+    .required("This field is required!")
+    .min(8, "Password must be more than 8 character"),
+});
 
 const SignUpPage = () => {
   const [acceptTerm, setAcceptTerm] = useState(false);
   const {
     handleSubmit,
     control,
-    formState: { isValid, isSubmitting },
-  } = useForm({});
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema), mode: "onSubmit" });
+
   const handleSignUp = (values) => {
     console.log("🚀 ~ file: SignUpPage.js:17 ~ SignUpPage ~ values:", values);
   };
+
   const handleToggleAcceptTerm = () => {
     setAcceptTerm(!acceptTerm);
   };
+
   return (
     <AuthenticationLayout heading={"Sign Up"}>
       <p className="mb-6 text-xs font-normal text-center lg:text-sm text-text3 lg:mb-8">
@@ -39,7 +56,12 @@ const SignUpPage = () => {
       <form onSubmit={handleSubmit(handleSignUp)} autoComplete="off">
         <FormGroup>
           <Label htmlFor="name">Full Name *</Label>
-          <Input control={control} name="name" placeholder="John Doe"></Input>
+          <Input
+            control={control}
+            name="name"
+            placeholder="John Doe"
+            error={errors.name?.message}
+          ></Input>
         </FormGroup>
         <FormGroup>
           <Label htmlFor="email">Email *</Label>
@@ -48,6 +70,7 @@ const SignUpPage = () => {
             name="email"
             type="email"
             placeholder="example@gmail.com"
+            error={errors.email?.message}
           ></Input>
         </FormGroup>
         <FormGroup>
@@ -57,6 +80,7 @@ const SignUpPage = () => {
             name="password"
             type="password"
             placeholder="Create a password"
+            error={errors.password?.message}
           ></Input>
         </FormGroup>
         <div className="flex items-start mb-5 gap-x-5">
