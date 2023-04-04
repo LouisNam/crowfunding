@@ -2,7 +2,7 @@ import React from "react";
 
 const Search = () => {
   return (
-    <div className="bg-white rounded-full shadow-[10px_10px_20px_rgba(218,213,213,0.15)] p-2 flex items-center">
+    <div className="flex items-center p-2 bg-white rounded-full shadow-sdPrimary">
       <div className="flex-1 pl-5 pr-2">
         <input
           type="text"
@@ -20,7 +20,7 @@ const Search = () => {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          class="w-6 h-6"
+          className="w-6 h-6"
         >
           <path
             strokeLinecap="round"

@@ -4,9 +4,9 @@ import React from "react";
 
 const DashboardLayout = ({ children }) => {
   return (
-    <div className="p-10 bg-lite">
+    <div className="min-h-screen p-10 bg-lite">
       <TopBar></TopBar>
-      <div>
+      <div className="flex items-start gap-x-10">
         <SideBar></SideBar>
         <div>{children}</div>
       </div>
