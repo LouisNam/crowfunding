@@ -33,7 +33,7 @@ const sidebarLinks = [
 
 const SideBar = () => {
   return (
-    <div className="w-full md:w-[76px] md:min-h-[733px] rounded-3xl bg-white shadow-sdPrimary px-[14px] py-10 flex flex-col">
+    <div className="w-full md:w-[76px] md:min-h-[733px] rounded-3xl bg-white shadow-sdPrimary px-[14px] py-10 flex flex-col flex-shrink-0">
       {sidebarLinks.map((item) => (
         <NavLink
           to={item.url}
