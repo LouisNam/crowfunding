@@ -30,6 +30,7 @@ const Button = ({
         defaultClass + " bg-secondary text-secondary bg-opacity-10";
       break;
     default:
+      defaultClass = defaultClass + " bg-primary text-white";
       break;
   }
 

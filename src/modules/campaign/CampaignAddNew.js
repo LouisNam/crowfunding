@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import ImageUploader from "quill-image-uploader";
+import { Button } from "components/button";
 Quill.register("modules/imageUploader", ImageUploader);
 
 const CampaignAddNew = () => {
@@ -100,6 +101,80 @@ const CampaignAddNew = () => {
             placeholder="Write your story..."
           />
         </FormGroup>
+        <FormRow>
+          <FormGroup>
+            <Label htmlFor="goal">Goal *</Label>
+            <Input
+              control={control}
+              name="goal"
+              placeholder="$0.00 USD"
+            ></Input>
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="amount">Raised amount *</Label>
+            <Input
+              control={control}
+              name="amount"
+              placeholder="$0.00 USD"
+            ></Input>
+          </FormGroup>
+        </FormRow>
+        <FormRow>
+          <FormGroup>
+            <Label htmlFor="prefill">Amount Prefilled</Label>
+            <Input
+              control={control}
+              name="prefill"
+              placeholder="Amount Prefilled"
+            ></Input>
+            <p className="text-sm text-left text-text3">
+              It will help fill amount box by click, place each amount by comma,
+              ex: 10,20,30,40
+            </p>
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="video">Video</Label>
+            <Input control={control} name="video" placeholder="Video"></Input>
+            <p className="text-sm text-left text-text3">
+              Place Youtube or Vimeo Video URL
+            </p>
+          </FormGroup>
+        </FormRow>
+        <FormRow>
+          <FormGroup>
+            <Label htmlFor="title">Campaign End Method</Label>
+            <Dropdown>
+              <Dropdown.Select placeholder="Select one"></Dropdown.Select>
+            </Dropdown>
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="title">Country</Label>
+            <Dropdown>
+              <Dropdown.Select placeholder="Select a country"></Dropdown.Select>
+            </Dropdown>
+          </FormGroup>
+        </FormRow>
+        <FormRow>
+          <FormGroup>
+            <Label htmlFor="startDate">Start Date</Label>
+            <Input
+              control={control}
+              name="startDate"
+              placeholder="Start Date"
+            ></Input>
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="endDate">End Date</Label>
+            <Input
+              control={control}
+              name="endDate"
+              placeholder="End Date"
+            ></Input>
+          </FormGroup>
+        </FormRow>
+        <div className="mt-10 text-center">
+          <Button className="px-10 mx-auto">Submit new campaign</Button>
+        </div>
       </form>
     </div>
   );

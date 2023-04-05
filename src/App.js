@@ -1,3 +1,5 @@
+import DashboardLayout from "layout/DashboardLayout";
+import CampaignView from "modules/campaign/CampaignView";
 import DashboardPage from "pages/DashboardPage";
 import StartCampaignPage from "pages/StartCampaignPage";
 import React, { lazy, Suspense } from "react";
@@ -11,14 +13,24 @@ function App() {
   return (
     <Suspense>
       <Routes>
-        <Route path="/" element={<DashboardPage></DashboardPage>}></Route>
+        <Route element={<DashboardLayout></DashboardLayout>}>
+          <Route path="/" element={<DashboardPage></DashboardPage>}></Route>
+          <Route
+            path="/campaign"
+            element={<CampaignPage></CampaignPage>}
+          ></Route>
+          <Route
+            path="/start-campaign"
+            element={<StartCampaignPage></StartCampaignPage>}
+          ></Route>
+          <Route
+            path="/campaign/:slug"
+            element={<CampaignView></CampaignView>}
+          ></Route>
+        </Route>
         <Route path="/sign-up" element={<SignUpPage></SignUpPage>}></Route>
         <Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
-        <Route path="/campaign" element={<CampaignPage></CampaignPage>}></Route>
-        <Route
-          path="/start-campaign"
-          element={<StartCampaignPage></StartCampaignPage>}
-        ></Route>
+        <Route path="/start-campaign"></Route>
       </Routes>
     </Suspense>
   );
