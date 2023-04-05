@@ -4,6 +4,9 @@ import React, { useState } from "react";
 
 const Search = () => {
   const [showSearch, setShowSearch] = useState(false);
+  const handleSearch = () => {
+    setShowSearch(!showSearch);
+  };
   return (
     <div className="relative z-50">
       <div className="flex items-center p-2 bg-white rounded-full shadow-sdPrimary">
@@ -17,6 +20,7 @@ const Search = () => {
         <button
           type="button"
           className="w-[72px] rounded-full bg-primary text-white h-10 flex items-center justify-center flex-shrink-0"
+          onClick={handleSearch}
         >
           <IconSearch></IconSearch>
         </button>

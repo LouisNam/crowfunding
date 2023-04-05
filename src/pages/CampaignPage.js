@@ -1,6 +1,6 @@
 import { Button } from "components/button";
 import Heading from "components/common/Heading";
-import { IconPlus } from "components/icons";
+import { IconPlus, IconPlusSmall } from "components/icons";
 import DashboardLayout from "layout/DashboardLayout";
 import CampaignFeature from "modules/campaign/CampaignFeature";
 import CampaignGrid from "modules/campaign/CampaignGrid";
@@ -26,7 +26,7 @@ const CampaignPage = () => {
             </a>
           </div>
         </div>
-        <Button className="bg-secondary !text-secondary bg-opacity-20">
+        <Button kind="ghost" className="px-8" href="/start-campaign">
           Create campaign
         </Button>
       </div>
@@ -37,6 +37,12 @@ const CampaignPage = () => {
         <CampaignFeature></CampaignFeature>
         <CampaignFeature></CampaignFeature>
       </CampaignGrid>
+      <div className="mt-10 text-center">
+        <Button kind="ghost" className="px-8 mx-auto">
+          <span>See more</span>
+          <IconPlusSmall></IconPlusSmall>
+        </Button>
+      </div>
     </DashboardLayout>
   );
 };

@@ -73,7 +73,7 @@ const SignInPage = () => {
             <span className="inline-block text-primary">Forgot Password</span>
           </div>
         </FormGroup>
-        <Button type="submit" className="w-full text-sm font-medium bg-primary">
+        <Button type="submit" className="w-full" kind="primary">
           Sign In
         </Button>
       </form>
