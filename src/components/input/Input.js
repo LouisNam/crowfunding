@@ -21,7 +21,7 @@ const Input = ({
         id={name}
         type={type}
         className={classNames(
-          "w-full px-6 py-4 text-xl border  rounded-xl placeholder:text-text4 dark:placeholder:text-text2 dark:text-white bg-transparent",
+          "w-full px-6 py-4 text-sm border rounded-xl placeholder:text-text4 dark:placeholder:text-text2 dark:text-white bg-transparent",
           error.length > 0
             ? "border-error text-error"
             : "border-stroke text-text1 dark:border-darkStroke",
