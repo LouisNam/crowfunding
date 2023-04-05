@@ -11,3 +11,4 @@ export const { default: IconSearch } = require("./IconSearch");
 export const { default: IconClose } = require("./IconClose");
 export const { default: IconPlus } = require("./IconPlus");
 export const { default: IconPlusSmall } = require("./IconPlusSmall");
+export const { default: IconStar } = require("./IconStar");
