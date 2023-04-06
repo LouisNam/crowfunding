@@ -1,13 +1,27 @@
 import DashboardLayout from "layout/DashboardLayout";
-import CampaignView from "modules/campaign/CampaignView";
-import DashboardPage from "pages/DashboardPage";
-import StartCampaignPage from "pages/StartCampaignPage";
 import React, { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
+import Modal from "react-modal";
 
 const SignUpPage = lazy(() => import("pages/SignUpPage"));
 const SignInPage = lazy(() => import("pages/SignInPage"));
 const CampaignPage = lazy(() => import("pages/CampaignPage"));
+const DashboardPage = lazy(() => import("pages/DashboardPage"));
+const StartCampaignPage = lazy(() => import("pages/StartCampaignPage"));
+const CampaignView = lazy(() => import("modules/campaign/CampaignView"));
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
+Modal.setAppElement("#root");
 
 function App() {
   return (
