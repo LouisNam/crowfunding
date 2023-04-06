@@ -18,6 +18,7 @@ module.exports = {
         white: "#FFFFFF",
         whiteSoft: "#FCFBFF",
         graySoft: "#FCFCFC",
+        grayF3: "#F3F3F3",
         stroke: "#F1F1F3",
         lite: "#FCFCFD",
         error: "#EB5757",

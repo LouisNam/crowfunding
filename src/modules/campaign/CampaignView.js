@@ -7,6 +7,10 @@ import CampImage from "./parts/CampImage";
 import { Button } from "components/button";
 import CampViewAuthor from "./parts/CampViewAuthor";
 import { defaultImage } from "constants/global";
+import CampaignSupport from "./CampaignSupport";
+import CampaignPerk from "./CampaignPerk";
+import CampaignGrid from "./CampaignGrid";
+import CampaignItem from "./CampaignItem";
 
 const CampaignView = () => {
   return (
@@ -58,6 +62,35 @@ const CampaignView = () => {
           </Button>
         </div>
       </div>
+      <div className="flex items-center justify-between mt-[100px] bg-white p-5 shadow-sm border-b border-b-slate-100 mb-6">
+        <div className="flex items-center text-sm font-medium gap-x-4 text-text3">
+          <span className="cursor-pointer text-secondary">Campaign</span>
+          <span className="cursor-pointer">Risks</span>
+          <span className="cursor-pointer">FAQ</span>
+        </div>
+        <Button kind="primary">Back this project</Button>
+      </div>
+      <div className="grid gap-x-[124px] grid-cols-[1.3fr,1fr] mb-[70px]">
+        <div></div>
+        <div>
+          <CampaignSupport></CampaignSupport>
+          <div className="mb-[60px]"></div>
+          <div className="flex flex-col gap-y-[30px]">
+            <CampaignPerk></CampaignPerk>
+            <CampaignPerk></CampaignPerk>
+            <CampaignPerk></CampaignPerk>
+          </div>
+        </div>
+      </div>
+      <h2 className="mb-10 text-xl font-semibold">
+        You also may be interested in
+      </h2>
+      <CampaignGrid>
+        <CampaignItem></CampaignItem>
+        <CampaignItem></CampaignItem>
+        <CampaignItem></CampaignItem>
+        <CampaignItem></CampaignItem>
+      </CampaignGrid>
     </Fragment>
   );
 };
