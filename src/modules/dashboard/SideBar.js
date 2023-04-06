@@ -19,7 +19,7 @@ const sidebarLinks = [
   {
     icon: <IconLogout></IconLogout>,
     title: "Logout",
-    url: "/logout",
+    url: "/checkout",
     onClick: () => {},
   },
   {
