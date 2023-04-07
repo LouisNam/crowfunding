@@ -12,6 +12,7 @@ import ImageUploader from "quill-image-uploader";
 import { Button } from "components/button";
 import axios from "axios";
 import useOnChange from "hooks/useOnChange";
+import DatePicker from "react-datepicker";
 Quill.register("modules/imageUploader", ImageUploader);
 
 const CampaignAddNew = () => {
@@ -19,6 +20,8 @@ const CampaignAddNew = () => {
   const [content, setContent] = useState();
   const [countries, setCountries] = useState([]);
   const [filterCountry, setFilterCountry] = useOnChange(500);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   useEffect(() => {
     if (!filterCountry) return;
@@ -207,19 +210,19 @@ const CampaignAddNew = () => {
         <FormRow>
           <FormGroup>
             <Label htmlFor="startDate">Start Date</Label>
-            <Input
-              control={control}
-              name="startDate"
-              placeholder="Start Date"
-            ></Input>
+            <DatePicker
+              dateFormat="dd-MM-yyyy"
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+            />
           </FormGroup>
           <FormGroup>
             <Label htmlFor="endDate">End Date</Label>
-            <Input
-              control={control}
-              name="endDate"
-              placeholder="End Date"
-            ></Input>
+            <DatePicker
+              dateFormat="dd-MM-yyyy"
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+            />
           </FormGroup>
         </FormRow>
         <div className="mt-10 text-center">

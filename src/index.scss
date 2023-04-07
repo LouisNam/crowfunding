@@ -54,3 +54,12 @@ input:focus + .error-input {
 .scroll-hidden::-webkit-scrollbar {
   display: none;
 }
+// * Custom date picker
+
+.react-datepicker-wrapper {
+  .react-datepicker__input-container {
+    input[type="text"] {
+      @apply w-full px-6 py-4 text-sm border rounded-xl  border-stroke;
+    }
+  }
+}

@@ -9,6 +9,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import ReactModal from "react-modal";
 import { Outlet } from "react-router-dom";
+import "react-datepicker/dist/react-datepicker.css";
 
 const DashboardLayout = () => {
   const { control } = useForm();
