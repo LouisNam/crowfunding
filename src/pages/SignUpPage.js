@@ -11,6 +11,8 @@ import Input from "components/input/Input";
 import Label from "components/label/Label";
 import React from "react";
 import useToggleValue from "hooks/useToggleValue";
+import { useDispatch } from "react-redux";
+import { register } from "store/auth/auth-slice";
 
 const schema = yup.object({
   name: yup.string().required("This field is required!"),
@@ -29,10 +31,17 @@ const SignUpPage = () => {
     handleSubmit,
     control,
     formState: { errors },
+    reset,
   } = useForm({ resolver: yupResolver(schema), mode: "onSubmit" });
 
+  const dispatch = useDispatch();
   const handleSignUp = (values) => {
-    console.log("🚀 ~ file: SignUpPage.js:17 ~ SignUpPage ~ values:", values);
+    try {
+      dispatch(register(values));
+      reset();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const { value: acceptTerm, handleToggleValue: handleToggleAcceptTerm } =
