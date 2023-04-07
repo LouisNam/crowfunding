@@ -13,10 +13,25 @@
       "password": "$2b$10$R3TnssJhrYuXi5/u4r9bou/mQ4xllqVf.13rmDqOaPUU4uWyFIUsi",
       "email": "trananhtuan400@gmail.com",
       "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6InR1YW50cmFuIiwiaWF0IjoxNjY1OTM5NzMyLCJleHAiOjE2NjYxMTI1MzJ9.9FhKpwnSU2bnUNFtLLOFEqC78_DK5a7xJrAzkr-jj1I",
-      "permissions": ["CREATE_CAMPAIGN"]
+      "permissions": [
+        "CREATE_CAMPAIGN"
+      ]
     }
   ],
-  "categories": [],
+  "categories": [
+    {
+      "title": "awdawd",
+      "shortDescription": "awd",
+      "goal": "awd",
+      "amount": "awd",
+      "prefill": "adw",
+      "video": "daw",
+      "category": "architecture",
+      "startDate": "2023-04-07T21:46:29.491Z",
+      "endDate": "2023-04-07T21:46:29.491Z",
+      "id": 1
+    }
+  ],
   "campaigns": [
     {
       "title": "Building Hope Village",

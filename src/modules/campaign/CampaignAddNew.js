@@ -1,27 +1,42 @@
-import FormGroup from "components/common/FormGroup";
-import FormRow from "components/common/FormRow";
-import { Dropdown } from "components/dropdown";
-import { Textarea } from "components/input";
-import Input from "components/input/Input";
-import { Label } from "components/label";
-import React, { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import ReactQuill, { Quill } from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import ImageUploader from "quill-image-uploader";
-import { Button } from "components/button";
-import axios from "axios";
 import useOnChange from "hooks/useOnChange";
+import ReactQuill, { Quill } from "react-quill";
+import React, { useEffect, useMemo, useState } from "react";
+import Input from "components/input/Input";
+import ImageUploader from "quill-image-uploader";
+import FormRow from "components/common/FormRow";
+import FormGroup from "components/common/FormGroup";
 import DatePicker from "react-datepicker";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { Textarea } from "components/input";
+import { Label } from "components/label";
+import { ImageUpload } from "components/image";
+import { Dropdown } from "components/dropdown";
+import { Button } from "components/button";
+import { apiUrl, imgbbAPI } from "config/config";
+import "react-quill/dist/quill.snow.css";
+import { toast } from "react-toastify";
 Quill.register("modules/imageUploader", ImageUploader);
 
+const categoriesData = ["architecture", "education"];
+
 const CampaignAddNew = () => {
-  const { handleSubmit, control, setValue } = useForm();
+  const { handleSubmit, control, setValue, reset, watch } = useForm();
   const [content, setContent] = useState();
   const [countries, setCountries] = useState([]);
   const [filterCountry, setFilterCountry] = useOnChange(500);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+
+  const resetValues = () => {
+    setStartDate("");
+    setEndDate("");
+    setContent("");
+  };
+
+  const getDropdownLabel = (name, defaultValue = "") => {
+    return watch(name) || defaultValue;
+  };
 
   useEffect(() => {
     if (!filterCountry) return;
@@ -50,23 +65,19 @@ const CampaignAddNew = () => {
         ["link", "image"],
       ],
       imageUploader: {
-        // TODO: Upload Image feature
-        // imgbbAPI
-        // upload: async (file) => {
-        //   console.log("upload: ~ file", file);
-        //   const bodyFormData = new FormData();
-        //   console.log("upload: ~ bodyFormData", bodyFormData);
-        //   bodyFormData.append("image", file);
-        //   const response = await axios({
-        //     method: "post",
-        //     url: imgbbAPI,
-        //     data: bodyFormData,
-        //     headers: {
-        //       "Content-Type": "multipart/form-data",
-        //     },
-        //   });
-        //   return response.data.data.url;
-        // },
+        upload: async (file) => {
+          const bodyFormData = new FormData();
+          bodyFormData.append("image", file);
+          const response = await axios({
+            method: "POST",
+            url: imgbbAPI,
+            data: bodyFormData,
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+          return response.data.data.url;
+        },
       },
     }),
     []
@@ -76,11 +87,20 @@ const CampaignAddNew = () => {
     setValue(name, value);
   };
 
-  const handleAddNewCampaign = (values) => {
-    console.log(
-      "🚀 ~ file: CampaignAddNew.js:12 ~ handleAddNewCampaign ~ values:",
-      values
-    );
+  const handleAddNewCampaign = async (values) => {
+    try {
+      await axios.post(`${apiUrl}/categories`, {
+        ...values,
+        content,
+        startDate,
+        endDate,
+      });
+      resetValues();
+      reset({});
+      toast.success("Add new campaign success");
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   return (
@@ -103,15 +123,21 @@ const CampaignAddNew = () => {
           <FormGroup>
             <Label htmlFor="title">Select a category *</Label>
             <Dropdown>
-              <Dropdown.Select placeholder="Select the category"></Dropdown.Select>
+              <Dropdown.Select
+                placeholder={getDropdownLabel(
+                  "category",
+                  "Select the category..."
+                )}
+              ></Dropdown.Select>
               <Dropdown.List>
-                <Dropdown.Option
-                  onClick={() =>
-                    handleSelectDropdownOption("category", "architecture")
-                  }
-                >
-                  Architecture
-                </Dropdown.Option>
+                {categoriesData.map((item) => (
+                  <Dropdown.Option
+                    key={item}
+                    onClick={() => handleSelectDropdownOption("category", item)}
+                  >
+                    <span className="capitalize">{item}</span>
+                  </Dropdown.Option>
+                ))}
               </Dropdown.List>
             </Dropdown>
           </FormGroup>
@@ -134,6 +160,13 @@ const CampaignAddNew = () => {
             placeholder="Write your story..."
           />
         </FormGroup>
+        <FormRow>
+          <FormGroup>
+            <Label htmlFor="image">Feature Image</Label>
+            <ImageUpload onChange={setValue} name="image"></ImageUpload>
+          </FormGroup>
+          {/* <FormGroup></FormGroup> */}
+        </FormRow>
         <FormRow>
           <FormGroup>
             <Label htmlFor="goal">Goal *</Label>
@@ -183,7 +216,9 @@ const CampaignAddNew = () => {
           <FormGroup>
             <Label htmlFor="title">Country</Label>
             <Dropdown>
-              <Dropdown.Select placeholder="Select a country"></Dropdown.Select>
+              <Dropdown.Select
+                placeholder={getDropdownLabel("country", "Select a country...")}
+              ></Dropdown.Select>
               <Dropdown.List>
                 <Dropdown.Search
                   placeholder="Search country..."
@@ -226,7 +261,9 @@ const CampaignAddNew = () => {
           </FormGroup>
         </FormRow>
         <div className="mt-10 text-center">
-          <Button className="px-10 mx-auto">Submit new campaign</Button>
+          <Button type="submit" className="px-10 mx-auto">
+            Submit new campaign
+          </Button>
         </div>
       </form>
     </div>
