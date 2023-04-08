@@ -44,6 +44,7 @@ const SideBar = () => {
               type="button"
               onClick={() => dispatch(logOut())}
               className={`${navLinkClass} text-iconColor`}
+              key={item.title}
             >
               <span>{item.icon}</span>
               <span className="md:hidden">{item.title}</span>

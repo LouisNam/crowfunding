@@ -1,15 +1,15 @@
 import useToggleValue from "hooks/useToggleValue";
-import React, { useEffect } from "react";
+import React from "react";
 import Input from "components/input/Input";
 import FormGroup from "components/common/FormGroup";
 import AuthenticationLayout from "layout/AuthenticationLayout";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { login } from "store/auth/auth-slice";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Label } from "components/label";
 import { IconEyeToggle } from "components/icons";
 import { Button, ButtonGoogle } from "components/button";
@@ -24,14 +24,6 @@ const schema = yup.object({
 
 const SignInPage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth);
-  useEffect(() => {
-    if (user && user.id) {
-      navigate("/");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
   const {
     handleSubmit,
     control,
@@ -46,7 +38,6 @@ const SignInPage = () => {
     try {
       dispatch(login(values));
       reset();
-      navigate("/");
     } catch (error) {
       toast.error(error);
     }
