@@ -1,5 +1,10 @@
 import { call, put } from "redux-saga/effects";
-import { requestFetchMe, requestLogin, requestRegister } from "./auth-requests";
+import {
+  requestFetchMe,
+  requestLogin,
+  requestRefreshToken,
+  requestRegister,
+} from "./auth-requests";
 import { toast } from "react-toastify";
 import { saveToken } from "utils/auth";
 import { updateUser } from "./auth-slice";
@@ -37,4 +42,16 @@ function* handleFetchMe({ payload }) {
   }
 }
 
-export { handleLogin, handleFetchMe };
+function* handleRefreshToken({ payload }) {
+  try {
+    const response = yield call(requestRefreshToken, payload);
+    if (response.data) {
+      saveToken(response.data.accessToken, response.data.refreshToken);
+      yield handleFetchMe({ payload: response.data.accessToken });
+    }
+  } catch (error) {
+    toast.error(error.message);
+  }
+}
+
+export { handleLogin, handleFetchMe, handleRefreshToken };

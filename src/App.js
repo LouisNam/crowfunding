@@ -8,6 +8,8 @@ import ShippingPage from "pages/ShippingPage";
 import PaymentPage from "pages/PaymentPage";
 import WithdrawPage from "pages/WithdrawPage";
 import { useDispatch, useSelector } from "react-redux";
+import { refreshToken, updateUser } from "store/auth/auth-slice";
+import { getToken } from "utils/auth";
 
 const SignUpPage = lazy(() => import("pages/SignUpPage"));
 const SignInPage = lazy(() => import("pages/SignInPage"));
@@ -19,14 +21,19 @@ const CampaignView = lazy(() => import("modules/campaign/CampaignView"));
 Modal.setAppElement("#root");
 
 function App() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (user || user.id) {
-      //
+    const { refresh_token, access_token } = getToken();
+    if (user && user.id) {
+      dispatch(updateUser({ user, accessToken: access_token }));
     } else {
-      //
+      if (refresh_token) {
+        dispatch(refreshToken(refresh_token));
+      } else {
+        dispatch(updateUser({}));
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);

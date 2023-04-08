@@ -5,15 +5,23 @@ import Input from "components/input/Input";
 import CampaignPerk from "modules/campaign/CampaignPerk";
 import SideBar from "modules/dashboard/SideBar";
 import TopBar from "modules/dashboard/TopBar";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import ReactModal from "react-modal";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
+import { useSelector } from "react-redux";
 
 const DashboardLayout = () => {
   const { control } = useForm();
-
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!user || !user.email) {
+      navigate("/login");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
   return (
     <div className="min-h-screen p-10 bg-lite">
       <Overlay></Overlay>

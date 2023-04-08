@@ -1,17 +1,18 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, ButtonGoogle } from "components/button";
-import FormGroup from "components/common/FormGroup";
-import { IconEyeToggle } from "components/icons";
-import Input from "components/input/Input";
-import { Label } from "components/label";
 import useToggleValue from "hooks/useToggleValue";
-import AuthenticationLayout from "layout/AuthenticationLayout";
 import React from "react";
+import Input from "components/input/Input";
+import FormGroup from "components/common/FormGroup";
+import AuthenticationLayout from "layout/AuthenticationLayout";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { login } from "store/auth/auth-slice";
-import * as yup from "yup";
+import { Link, useNavigate } from "react-router-dom";
+import { Label } from "components/label";
+import { IconEyeToggle } from "components/icons";
+import { Button, ButtonGoogle } from "components/button";
 
 const schema = yup.object({
   email: yup.string().required("").email("Invalid email address!"),
@@ -23,11 +24,12 @@ const schema = yup.object({
 
 const SignInPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
     formState: { errors },
-    // reset,
+    reset,
   } = useForm({ resolver: yupResolver(schema), mode: "onSubmit" });
 
   const { value: showPassword, handleToggleValue: handleTogglePassword } =
@@ -36,9 +38,10 @@ const SignInPage = () => {
   const handleSignIn = (values) => {
     try {
       dispatch(login(values));
-      // reset();
+      reset();
+      navigate("/");
     } catch (error) {
-      console.error(error);
+      toast.error(error);
     }
   };
 

@@ -17,3 +17,10 @@ export const requestFetchMe = (token) => {
     },
   });
 };
+
+export const requestRefreshToken = (token) => {
+  if (!token) return;
+  return axios.post("/token", {
+    refreshToken: token,
+  });
+};
