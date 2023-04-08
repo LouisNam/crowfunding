@@ -1,5 +1,5 @@
 import DashboardLayout from "layout/DashboardLayout";
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Modal from "react-modal";
 import PaymentLayout from "layout/PaymentLayout";
@@ -7,6 +7,7 @@ import CheckoutPage from "pages/CheckoutPage";
 import ShippingPage from "pages/ShippingPage";
 import PaymentPage from "pages/PaymentPage";
 import WithdrawPage from "pages/WithdrawPage";
+import { useDispatch, useSelector } from "react-redux";
 
 const SignUpPage = lazy(() => import("pages/SignUpPage"));
 const SignInPage = lazy(() => import("pages/SignInPage"));
@@ -18,6 +19,18 @@ const CampaignView = lazy(() => import("modules/campaign/CampaignView"));
 Modal.setAppElement("#root");
 
 function App() {
+  // const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (user || user.id) {
+      //
+    } else {
+      //
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
   return (
     <Suspense>
       <Routes>

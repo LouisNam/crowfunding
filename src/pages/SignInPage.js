@@ -9,7 +9,7 @@ import AuthenticationLayout from "layout/AuthenticationLayout";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { login } from "store/auth/auth-slice";
 import * as yup from "yup";
 
@@ -27,7 +27,7 @@ const SignInPage = () => {
     handleSubmit,
     control,
     formState: { errors },
-    reset,
+    // reset,
   } = useForm({ resolver: yupResolver(schema), mode: "onSubmit" });
 
   const { value: showPassword, handleToggleValue: handleTogglePassword } =
@@ -36,8 +36,7 @@ const SignInPage = () => {
   const handleSignIn = (values) => {
     try {
       dispatch(login(values));
-      redirect("/");
-      reset();
+      // reset();
     } catch (error) {
       console.error(error);
     }
