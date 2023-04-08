@@ -6,7 +6,7 @@ import {
   requestRegister,
 } from "./auth-requests";
 import { toast } from "react-toastify";
-import { saveToken } from "utils/auth";
+import { logOut, saveToken } from "utils/auth";
 import { updateUser } from "./auth-slice";
 
 export default function* handleRegister(action) {
@@ -48,10 +48,17 @@ function* handleRefreshToken({ payload }) {
     if (response.data) {
       saveToken(response.data.accessToken, response.data.refreshToken);
       yield handleFetchMe({ payload: response.data.accessToken });
+    } else {
+      yield handleLogOut();
     }
   } catch (error) {
     toast.error(error.message);
   }
 }
 
-export { handleLogin, handleFetchMe, handleRefreshToken };
+function* handleLogOut() {
+  yield put(updateUser({ user: undefined, accessToken: null }));
+  logOut();
+}
+
+export { handleLogin, handleFetchMe, handleRefreshToken, handleLogOut };

@@ -9,7 +9,7 @@ import PaymentPage from "pages/PaymentPage";
 import WithdrawPage from "pages/WithdrawPage";
 import { useDispatch, useSelector } from "react-redux";
 import { refreshToken, updateUser } from "store/auth/auth-slice";
-import { getToken } from "utils/auth";
+import { getToken, logOut } from "utils/auth";
 
 const SignUpPage = lazy(() => import("pages/SignUpPage"));
 const SignInPage = lazy(() => import("pages/SignInPage"));
@@ -33,6 +33,7 @@ function App() {
         dispatch(refreshToken(refresh_token));
       } else {
         dispatch(updateUser({}));
+        logOut();
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
