@@ -1,1 +1,1 @@
-{ "users": [], "categories": [], "campaigns": [] }
+{"users":[{"id":1,"name":"test","password":"$2b$10$SmgNLppPgDkw5GpN9/K3I.a2A333GoIhGSZhAHWSWKm1eTmY.FLvq","email":"test@gmail.com","refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InRlc3QiLCJpYXQiOjE2ODA5MjEzNTAsImV4cCI6MTY4MTA5NDE1MH0.WwuyX8rr0vQ5uOEIrb9yrhawVh9uN31CR0Dn1MbNPpM"}],"categories":[],"campaigns":[]}

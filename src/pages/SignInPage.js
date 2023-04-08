@@ -8,7 +8,9 @@ import useToggleValue from "hooks/useToggleValue";
 import AuthenticationLayout from "layout/AuthenticationLayout";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, redirect } from "react-router-dom";
+import { login } from "store/auth/auth-slice";
 import * as yup from "yup";
 
 const schema = yup.object({
@@ -20,24 +22,32 @@ const schema = yup.object({
 });
 
 const SignInPage = () => {
+  const dispatch = useDispatch();
   const {
     handleSubmit,
     control,
     formState: { errors },
+    reset,
   } = useForm({ resolver: yupResolver(schema), mode: "onSubmit" });
 
   const { value: showPassword, handleToggleValue: handleTogglePassword } =
     useToggleValue();
 
   const handleSignIn = (values) => {
-    console.log("🚀 ~ file: SignInPage.js:28 ~ handleSignIn ~ values:", values);
+    try {
+      dispatch(login(values));
+      redirect("/");
+      reset();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <AuthenticationLayout heading={"Welcome Back"}>
       <p className="mb-6 text-xs font-normal text-center lg:text-sm text-text3 lg:mb-8">
         Don't have an account?{" "}
-        <Link to="/sign-in" className="font-medium underline text-primary">
+        <Link to="/register" className="font-medium underline text-primary">
           Sign up
         </Link>
       </p>

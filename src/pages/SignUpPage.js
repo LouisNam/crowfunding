@@ -1,7 +1,7 @@
 import { Button, ButtonGoogle } from "components/button";
 import { Checkbox } from "components/checkbox";
 import { IconEyeToggle } from "components/icons";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -38,6 +38,7 @@ const SignUpPage = () => {
   const handleSignUp = (values) => {
     try {
       dispatch(register(values));
+      redirect("/login");
       reset();
     } catch (error) {
       console.error(error);
@@ -53,7 +54,7 @@ const SignUpPage = () => {
     <AuthenticationLayout heading={"Sign Up"}>
       <p className="mb-6 text-xs font-normal text-center lg:text-sm text-text3 lg:mb-8">
         Already have an account?{" "}
-        <Link to="/sign-in" className="font-medium underline text-primary">
+        <Link to="/login" className="font-medium underline text-primary">
           Sign in
         </Link>
       </p>
