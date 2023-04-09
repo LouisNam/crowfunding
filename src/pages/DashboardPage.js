@@ -7,6 +7,25 @@ import React, { Fragment } from "react";
 import { v4 } from "uuid";
 
 const DashboardPage = () => {
+  // const axiosPrivate = useAxiosPrivate();
+  // useEffect(() => {
+  //   async function fetchCampaigns() {
+  //     try {
+  //       const response = await axiosPrivate.get("/api/campaigns");
+  //       console.log(
+  //         "🚀 ~ file: DashboardPage.js:16 ~ fetchCampaigns ~ response:",
+  //         response
+  //       );
+  //     } catch (error) {
+  //       console.log(
+  //         "🚀 ~ file: DashboardPage.js:17 ~ fetchCampaigns ~ error:",
+  //         error
+  //       );
+  //     }
+  //   }
+  //   fetchCampaigns();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
   return (
     <Fragment>
       <Heading number="4">Your campaign</Heading>

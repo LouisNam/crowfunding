@@ -11,7 +11,6 @@ import ReactModal from "react-modal";
 import { Outlet, useNavigate } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector } from "react-redux";
-import RequiredAuthPage from "pages/RequiredAuthPage";
 
 const DashboardLayout = () => {
   const { control } = useForm();
@@ -24,49 +23,47 @@ const DashboardLayout = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
   return (
-    <RequiredAuthPage>
-      <div className="min-h-screen p-10 bg-lite">
-        <Overlay></Overlay>
-        <TopBar></TopBar>
-        <div className="flex items-start gap-x-10">
-          <SideBar></SideBar>
-          <div className="flex-1">
-            <Outlet></Outlet>
-          </div>
+    <div className="min-h-screen p-10 bg-lite">
+      <Overlay></Overlay>
+      <TopBar></TopBar>
+      <div className="flex items-start gap-x-10">
+        <SideBar></SideBar>
+        <div className="flex-1">
+          <Outlet></Outlet>
         </div>
-        <ReactModal
-          isOpen={false}
-          overlayClassName="model-overlay fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center"
-          className="modal-content w-full max-w-[521px] bg-white rounded-2xl outline-none p-10 relative max-h-[90vh] overflow-auto scroll-hidden"
-        >
-          <button
-            type="button"
-            className="absolute z-10 flex cursor-pointer w-11 h-11 right-[10px] top-[10px] text-text1"
-          >
-            <IconClose></IconClose>
-          </button>
-          <h2 className="font-bold text-[25px] mb-10 text-center">
-            Back this project
-          </h2>
-          <p className="mb-3 text-sm">Enter the contribute amount</p>
-          <Input
-            placeholder="$10"
-            control={control}
-            name="amount"
-            className="w-full px-5 py-3 text-lg font-medium border rounded border-stroke"
-          ></Input>
-          <p className="my-5 text-sm text-text3">
-            Contribution are not associatied with perks
-          </p>
-          <Button kind="primary">Continue</Button>
-          <div className="mt-[60px]"></div>
-          <CampaignPerk showBtn></CampaignPerk>
-          <CampaignPerk showBtn></CampaignPerk>
-          <CampaignPerk showBtn></CampaignPerk>
-          <CampaignPerk showBtn></CampaignPerk>
-        </ReactModal>
       </div>
-    </RequiredAuthPage>
+      <ReactModal
+        isOpen={false}
+        overlayClassName="model-overlay fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center"
+        className="modal-content w-full max-w-[521px] bg-white rounded-2xl outline-none p-10 relative max-h-[90vh] overflow-auto scroll-hidden"
+      >
+        <button
+          type="button"
+          className="absolute z-10 flex cursor-pointer w-11 h-11 right-[10px] top-[10px] text-text1"
+        >
+          <IconClose></IconClose>
+        </button>
+        <h2 className="font-bold text-[25px] mb-10 text-center">
+          Back this project
+        </h2>
+        <p className="mb-3 text-sm">Enter the contribute amount</p>
+        <Input
+          placeholder="$10"
+          control={control}
+          name="amount"
+          className="w-full px-5 py-3 text-lg font-medium border rounded border-stroke"
+        ></Input>
+        <p className="my-5 text-sm text-text3">
+          Contribution are not associatied with perks
+        </p>
+        <Button kind="primary">Continue</Button>
+        <div className="mt-[60px]"></div>
+        <CampaignPerk showBtn></CampaignPerk>
+        <CampaignPerk showBtn></CampaignPerk>
+        <CampaignPerk showBtn></CampaignPerk>
+        <CampaignPerk showBtn></CampaignPerk>
+      </ReactModal>
+    </div>
   );
 };
 

@@ -13,6 +13,7 @@ import React from "react";
 import useToggleValue from "hooks/useToggleValue";
 import { useDispatch } from "react-redux";
 import { register } from "store/auth/auth-slice";
+import { toast } from "react-toastify";
 
 const schema = yup.object({
   name: yup.string().required("This field is required!"),
@@ -37,11 +38,11 @@ const SignUpPage = () => {
   const dispatch = useDispatch();
   const handleSignUp = (values) => {
     try {
-      dispatch(register(values));
+      dispatch(register({ ...values, permissions: [] }));
       redirect("/login");
       reset();
     } catch (error) {
-      console.error(error);
+      toast.error(error);
     }
   };
 

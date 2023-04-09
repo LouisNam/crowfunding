@@ -10,6 +10,9 @@ import WithdrawPage from "pages/WithdrawPage";
 import { useDispatch, useSelector } from "react-redux";
 import { refreshToken, updateUser } from "store/auth/auth-slice";
 import { getToken, logOut } from "utils/auth";
+import RequiredAuthPage from "pages/RequiredAuthPage";
+import UnauthorizePage from "pages/UnauthorizePage";
+import { permissions } from "constants/permissions";
 
 const SignUpPage = lazy(() => import("pages/SignUpPage"));
 const SignInPage = lazy(() => import("pages/SignInPage"));
@@ -45,13 +48,25 @@ function App() {
         <Route element={<DashboardLayout></DashboardLayout>}>
           <Route path="/" element={<DashboardPage></DashboardPage>}></Route>
           <Route
+            path="/unauthorize"
+            element={<UnauthorizePage></UnauthorizePage>}
+          ></Route>
+          <Route
             path="/campaign"
             element={<CampaignPage></CampaignPage>}
           ></Route>
           <Route
-            path="/start-campaign"
-            element={<StartCampaignPage></StartCampaignPage>}
-          ></Route>
+            element={
+              <RequiredAuthPage
+                allowPermissions={[permissions.campaign.CREATE]}
+              ></RequiredAuthPage>
+            }
+          >
+            <Route
+              path="/start-campaign"
+              element={<StartCampaignPage></StartCampaignPage>}
+            ></Route>
+          </Route>
           <Route
             path="/campaign/:slug"
             element={<CampaignView></CampaignView>}
