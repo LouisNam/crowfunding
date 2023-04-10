@@ -1,23 +1,104 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.scss";
 import { store } from "./store/configureStore";
-import { BrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DashboardLayout from "layout/DashboardLayout";
+import WithdrawPage from "pages/WithdrawPage";
+import PaymentLayout from "layout/PaymentLayout";
+import UnauthorizePage from "pages/UnauthorizePage";
+import ShippingPage from "pages/ShippingPage";
+import CheckoutPage from "pages/CheckoutPage";
+import RequiredAuthPage from "pages/RequiredAuthPage";
+import { permissions } from "constants/permissions";
+import PaymentPage from "pages/PaymentPage";
 
-const container = document.getElementById("root");
-const root = createRoot(container);
+const SignUpPage = lazy(() => import("pages/SignUpPage"));
+const SignInPage = lazy(() => import("pages/SignInPage"));
+const CampaignPage = lazy(() => import("pages/CampaignPage"));
+const DashboardPage = lazy(() => import("pages/DashboardPage"));
+const StartCampaignPage = lazy(() => import("pages/StartCampaignPage"));
+const CampaignView = lazy(() => import("modules/campaign/CampaignView"));
 
-root.render(
+const router = createBrowserRouter([
+  {
+    path: "register",
+    element: <SignUpPage />,
+  },
+  {
+    path: "login",
+    element: <SignInPage />,
+  },
+  {
+    element: (
+      <RequiredAuthPage
+        allowPermissions={[permissions.campaign.CREATE]}
+      ></RequiredAuthPage>
+    ),
+    children: [
+      {
+        element: <DashboardLayout />,
+        children: [
+          {
+            path: "/",
+            element: <DashboardPage />,
+          },
+          {
+            path: "campaign",
+            element: <CampaignPage />,
+          },
+          {
+            path: "payment",
+            element: <PaymentPage />,
+          },
+          {
+            path: "withdraw",
+            element: <WithdrawPage />,
+          },
+          {
+            path: "unauthorize",
+            element: <UnauthorizePage />,
+          },
+          {
+            path: "start-campaign",
+            element: <StartCampaignPage />,
+          },
+          {
+            path: "campaign/:slug",
+            element: <CampaignView />,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    element: <PaymentLayout />,
+    children: [
+      {
+        path: "checkout",
+        element: <CheckoutPage />,
+      },
+      {
+        path: "shipping",
+        element: <ShippingPage />,
+      },
+    ],
+  },
+]);
+
+createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-      <ToastContainer bodyClassName="font-primary text-sm"></ToastContainer>
-    </BrowserRouter>
+    <Suspense fallback={<p>Loading...</p>}>
+      <RouterProvider router={router}>
+        <App />
+      </RouterProvider>
+    </Suspense>
+    <ToastContainer bodyClassName="font-primary text-sm"></ToastContainer>
   </Provider>
 );
 
